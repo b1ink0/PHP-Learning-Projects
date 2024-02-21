@@ -1,0 +1,14 @@
+version: '3'
+services:
+    web:
+        build: Dockerfile.nginx
+        ports:
+            - "80:80"
+
+    php:
+        build: .
+        develop:
+            watch:
+                - action: sync
+                  path: ./app
+                  target: ./app
