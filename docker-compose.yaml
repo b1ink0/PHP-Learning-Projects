@@ -1,9 +1,11 @@
 version: '3'
 services:
     web:
-        build: Dockerfile.nginx
+        image: nginx:mainline-alpine3.18-perl
         ports:
             - "80:80"
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
 
     php:
         build: .

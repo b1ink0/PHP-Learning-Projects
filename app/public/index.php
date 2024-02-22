@@ -1,18 +1,9 @@
 <?php
+require __DIR__ . '/../' . 'src/autoloader.php';
+require __DIR__ . '/../' . 'src/routes.php';
 
-declare(strict_types=1);
+define('VIEW_PATH', __DIR__ . '/../src/Views/');
 
-$root = dirname(__DIR__) . DIRECTORY_SEPARATOR;
+$uri = $_SERVER['REQUEST_URI'];
 
-define('APP_PATH', $root . 'src' . DIRECTORY_SEPARATOR);
-define('FILES_PATH', $root . 'transactions' . DIRECTORY_SEPARATOR);
-define('VIEWS_PATH', $root . 'views' . DIRECTORY_SEPARATOR);
-
-require_once APP_PATH . "app.php";
-require_once APP_PATH . "helper.php";
-
-$transactinFiles = getTransactionFiles(FILES_PATH);
-$transactions = getTransactions($transactinFiles, "extractTransaction");
-$transactionTotals = getTransactionTotal($transactions);
-
-require_once VIEWS_PATH . "transactions.php";
+$router->dispatch($uri);
