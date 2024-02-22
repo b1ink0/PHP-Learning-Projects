@@ -6,6 +6,8 @@ namespace App\Controllers;
 
 use App\Controller;
 use App\Attributes\Route;
+use App\Enums\Route as EnumsRoute;
+use App\Enums\ViewName;
 
 /**
  * Class HomeController
@@ -21,9 +23,9 @@ class HomeController extends Controller
      * from the parent class `Controller` and passing the view name as 'Home'.
      * @return void
      */
-    #[Route(path: '/')]
-    public function index(): void
+    #[Route(route: EnumsRoute::Home)]
+    public function index(string $param): void
     {
-        $this->render('Home');
+        $this->render(ViewName::Home);
     }
 }

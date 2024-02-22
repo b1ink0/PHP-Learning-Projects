@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App;
 
 use App\Attributes\Route;
+use App\Enums\Extension;
+use App\Enums\ViewName;
 
 /**
  *  Class Router
@@ -30,23 +32,30 @@ class Router
     public function registerRoutes(array $controllers): void
     {
         // Iterate through each controller class provided
-        foreach($controllers as $controller) {
+        foreach ($controllers as $controller) {
             // Create a ReflectionClass instance for the current controller class
             $reflectionController = new \ReflectionClass($controller);
 
             // Iterate through each method of the current controller class
-            foreach($reflectionController->getMethods() as $method) {
+            foreach ($reflectionController->getMethods() as $method) {
                 // Get all attributes applied to the current method of the controller
                 $attributes = $method->getAttributes(Route::class);
-                
+
                 // Iterate through each Route attribute found on the method
-                foreach($attributes as $attribute) {
-                     // Instantiate the Route attribute, passing the route path specified in its constructor
+                foreach ($attributes as $attribute) {
+                    // Instantiate the Route attribute, passing the route path specified in its constructor
                     $route = $attribute->newInstance();
 
                     // Add the route to the router by calling the addRoute method
                     // with the route path, controller class name, and method name
-                    $this->addRoute($route->path, $controller, $method->getName());
+                    $this->addRoute(
+                        $route->route->getPath(),
+                        $controller,
+                        [
+                            'name' => $method->getName(),
+                            'param' => $route->route->getMethodName()
+                        ]
+                    );
                 }
             }
         }
@@ -58,15 +67,13 @@ class Router
      *
      * @param string $route The route pattern.
      * @param string $controller The controller class name.
-     * @param string $action The controller action method name.
-     * @param array $constructorParams Optional parameters to pass to the controller constructor.
+     * @param array $action The controller action method name and method params.
      */
-    public function addRoute(string $route, string $controller, string $action, array $constructorParams = []): void
+    public function addRoute(string $route, string $controller, array $action): void
     {
         $this->routes[$route] = [
             'controller' => $controller,
-            'action' => $action,
-            'constructorParams' => $constructorParams,
+            'action' => $action
         ];
     }
 
@@ -80,15 +87,13 @@ class Router
         $uri = explode('?', $uri)[0];
         $route_exists = array_key_exists($uri, $this->routes);
         if (!$route_exists) {
-            include VIEW_PATH . '404' . '.php';
+            include VIEW_PATH . ViewName::NotFound->value . Extension::PHP->value;
             return;
         }
 
         $controller = $this->routes[$uri]['controller'];
         $action = $this->routes[$uri]['action'];
-        $constructorParams = $this->routes[$uri]['constructorParams'];
-
-        $controller = new $controller(...$constructorParams);
-        $controller->$action();
+        $controller = new $controller();
+        call_user_func_array([$controller, $action['name']], [$action['param']]);
     }
 }

@@ -1,12 +1,12 @@
-# PHP Attributes
+# PHP Enums
 ---
 
 #### Discription
-In this project attributes are used to automatically register routes.
+In this project enums are used to replace all the permanent strings
 
 #### Related Video
 
-https://youtu.be/I7WJa-he5oM?si=2mSoSrm2_Q4wXFdY
+https://youtu.be/5Cgio2OfOYk?si=g-mNKUjhOagj4h4N
 
 #### Steps to run the project
 ```bash
