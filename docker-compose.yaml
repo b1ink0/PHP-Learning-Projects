@@ -1,6 +1,7 @@
 version: '3'
 services:
     web:
+        container_name: "web-nginx"
         image: nginx:mainline-alpine3.18-perl
         ports:
             - "80:80"
@@ -8,6 +9,7 @@ services:
             - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
 
     php:
+        container_name: "php-fpm"
         build: .
         develop:
             watch:

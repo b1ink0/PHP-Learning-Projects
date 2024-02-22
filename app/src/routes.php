@@ -11,7 +11,11 @@ use App\Controllers\SubscriptionController;
  */
 $router = new Router();
 
-$router->addRoute('/', HomeController::class, 'index');
-$router->addRoute('/subscribe', SubscriptionController::class, 'subscribe');
-$router->addRoute('/verify', SubscriptionController::class, 'verify');
-$router->addRoute('/unsubscribe', SubscriptionController::class, 'unsubscribe');
+// Listing all controllers
+$controllers = [
+    HomeController::class,
+    SubscriptionController::class
+];
+
+// Registering routes using list of controller
+$router->registerRoutes($controllers);

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Attributes\Route;
+
 /**
  *  Class Router
  * 
@@ -11,7 +13,45 @@ namespace App;
  */
 class Router
 {
+    /**
+     * An array to store registered routes.
+     *
+     * @var array
+     */
     private array $routes = [];
+
+    /**
+     * Register routes from controllers.
+     *
+     * This method registers routes by inspecting the provided array of controller classes.
+     *
+     * @param array $controllers An array of controller classes.
+     */
+    public function registerRoutes(array $controllers): void
+    {
+        // Iterate through each controller class provided
+        foreach($controllers as $controller) {
+            // Create a ReflectionClass instance for the current controller class
+            $reflectionController = new \ReflectionClass($controller);
+
+            // Iterate through each method of the current controller class
+            foreach($reflectionController->getMethods() as $method) {
+                // Get all attributes applied to the current method of the controller
+                $attributes = $method->getAttributes(Route::class);
+                
+                // Iterate through each Route attribute found on the method
+                foreach($attributes as $attribute) {
+                     // Instantiate the Route attribute, passing the route path specified in its constructor
+                    $route = $attribute->newInstance();
+
+                    // Add the route to the router by calling the addRoute method
+                    // with the route path, controller class name, and method name
+                    $this->addRoute($route->path, $controller, $method->getName());
+                }
+            }
+        }
+    }
+
 
     /**
      * Adds a new route to the router.

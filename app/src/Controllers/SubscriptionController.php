@@ -6,6 +6,7 @@ namespace App\Controllers;
 
 use App\Controller;
 use App\Models\Subscription;
+use App\Attributes\Route;
 
 /**
  * Class SubscriptionController
@@ -18,6 +19,7 @@ class SubscriptionController extends Controller
      * Handles subscription request.
      * @return void
      */
+    #[Route(path: '/subscribe')]
     public function subscribe(): void
     {
         // Instantiate a new Subscription object
@@ -34,6 +36,7 @@ class SubscriptionController extends Controller
      * Handles verification request.
      * @return void
      */
+    #[Route(path: '/verify')]
     public function verify(): void
     {
         // Instantiate a new Subscription object
@@ -50,6 +53,7 @@ class SubscriptionController extends Controller
      * Handles unsubscription request.
      * @return void
      */
+    #[Route(path: '/unsubscribe')]
     public function unsubscribe(): void
     {
         // Instantiate a new Subscription object

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Controller;
+use App\Attributes\Route;
 
 /**
  * Class HomeController
@@ -20,6 +21,7 @@ class HomeController extends Controller
      * from the parent class `Controller` and passing the view name as 'Home'.
      * @return void
      */
+    #[Route(path: '/')]
     public function index(): void
     {
         $this->render('Home');
