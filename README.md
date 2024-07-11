@@ -2,14 +2,15 @@
 ---
 
 #### Discription
-This docker-compose will run the phpcs for all the files in src folder and give a phpcs-report.log file
+This `docker-compose.yaml` will run the phpcs for all the files in src folder and give a  `phpcs-report.log` file
 
 #### Steps to run the project
 
-- First remove the php project folder into the src folder
-- Then run the following command make sure docker is running
+- First move the php project folder into the `app/src` folder
+- Put the `phpcs.xml` file in the  `app` folder
+- Then run the following command and make sure docker is running
 
-```bash
-docker-compose up --build
-```
-- You will get a `phpcs-report.log` file 
+    ```bash
+    docker-compose up --build
+    ```
+- You will get a `app/phpcs-report.log` file 
