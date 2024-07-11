@@ -1,14 +1,15 @@
-# PHP Enums
+# PHPCS RUNNER 
 ---
 
 #### Discription
-In this project enums are used to replace all the permanent strings
-
-#### Related Video
-
-https://youtu.be/5Cgio2OfOYk?si=g-mNKUjhOagj4h4N
+This docker-compose will run the phpcs for all the files in src folder and give a phpcs-report.log file
 
 #### Steps to run the project
+
+- First remove the php project folder into the src folder
+- Then run the following command make sure docker is running
+
 ```bash
-docker-compose watch
+docker-compose up --build
 ```
+- You will get a `phpcs-report.log` file 

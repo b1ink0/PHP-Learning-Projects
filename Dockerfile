@@ -1,4 +1,4 @@
-FROM php:fpm-alpine3.18
+FROM php:fpm
 
 WORKDIR /app
 
